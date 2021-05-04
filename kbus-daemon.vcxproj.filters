@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{6ef51829-b69b-478d-8c7e-c869d4536a3b}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{9dc29636-b6e6-41c4-821e-54189624d7a0}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{d1b9d36d-81a3-4af2-8d60-e3530c9e0b55}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Make files">
+      <UniqueIdentifier>{d9859154-1f07-47f8-ab1e-b02a062b23b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{3a091026-6867-4c8d-9b04-10a5786b3ced}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="kbus-daemon.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <None Include="debug.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="release.mak">
+      <Filter>Make files</Filter>
+    </None>
+    <None Include="kbus-daemon-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="kbus-daemon-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <ClCompile Include="get_config.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="json.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="kbus.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="led.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="logger.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="mqtt.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="node.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="switch.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="get_config.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="json.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="kbus.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="led.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="logger.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="mqtt.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="switch.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
