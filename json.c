@@ -115,22 +115,6 @@ char *build_error_object(struct prog_config this_config, char *error_msg) {
 	return return_string;
 }
 
-void xxparse_command_message(char *message, int *module_position, int *channel_position, int *channel_value)	{
-	struct json_object *parsed_json, *module_num, *channel_num, *channel_val;
-	parsed_json = json_tokener_parse(message);
-	enum json_type value_type;
-	if (json_object_object_get_ex(parsed_json, "module", &module_num) == true) {
-		module_position = json_object_get_int(module_num);
-	}
-	if (json_object_object_get_ex(parsed_json, "channel", &channel_num) == true) {
-		channel_position = json_object_get_int(channel_num);
-	}
-	if (json_object_object_get_ex(parsed_json, "value", &channel_val) == true) {
-		channel_value = json_object_get_int(channel_val);
-	}
-	printf("Module: %d Channel: %d Value: %d \n", module_position, channel_position, channel_value);
-}
-
 struct channel_command parse_command_message(char *message)	{
 	struct channel_command rcv_command;
 	struct json_object *parsed_json, *module_num, *channel_num, *channel_val;
@@ -145,6 +129,6 @@ struct channel_command parse_command_message(char *message)	{
 	if (json_object_object_get_ex(parsed_json, "value", &channel_val) == true) {
 		rcv_command.value = json_object_get_int(channel_val);
 	}
-	printf("Module: %d Channel: %d Value: %d \n", rcv_command.module, rcv_command.channel, rcv_command.value);
+	//printf("Module: %d Channel: %d Value: %d \n", rcv_command.module, rcv_command.channel, rcv_command.value);
 	return rcv_command;
 };

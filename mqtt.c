@@ -28,18 +28,14 @@
 
 
 void mqtt_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message) {
-	printf("got message '%.*s' for topic '%s'\n", message->payloadlen, (char*) message->payload, message->topic);
-	//if (strcmp(message->topic, "PFC200V3-496122/control/outputs") != 0) {
 	if(strcmp(message->topic, "PFC200V3-496122/kbus/event/outputs") != 0) {
 		log_error("received message out of topic range");
 	}
 	else	{
+		// copy in the bu
 		char *buffer = message->payload;
-		int command_module_position;
-		int command_channel_position;
-		int command_channel_value;
+		int command_module_position, command_channel_position, command_channel_value;
 		struct channel_command rcv_command = parse_command_message(buffer);
-		printf("Parsed Module: %d Channel: %d Value: %d \n", rcv_command.module, rcv_command.channel, rcv_command.value);
 		kbus_write(rcv_command.module, rcv_command.channel, rcv_command.value);
 	}
 }

@@ -39,15 +39,9 @@
 #define IS_STOPPED	0x02
 #define IS_ERROR	0x80
 
-// main functional kbus object
-//struct kbus kbus;
-
 // main controller node object
 struct node controller;
 struct node controllerLast;
-
-// main kbus adi object
-//tApplicationDeviceInterface *adi;
 
 // main mosquitto object
 struct mosquitto *mosq = NULL;
@@ -57,6 +51,9 @@ int switch_state = 0;
 int mqtt_state = 0;
 
 int main(int argc, char *argv[]) {
+	
+	log_set_quiet(true);
+	log_set_level(0);
 		
 	// set the led state to stopped
 	set_led(IS_STOPPED);
@@ -84,6 +81,7 @@ int main(int argc, char *argv[]) {
 	
 	// main while loop to check run-ready status
 	while(1) {
+		
 		switch_state =	get_switch_state();
 		controller.switch_state = map_switch_state(switch_state);
 		
@@ -144,7 +142,8 @@ int main(int argc, char *argv[]) {
 			if (kbus_resp) {
 				//printf("Kbus response; %d /n", kbus_resp);
 			}
+			usleep(200);
 		}
 	} // main while loop 	
-	printf("Got here");
+	//printf("Got here");
 }
