@@ -54,7 +54,7 @@ char *build_kbus_object(struct node controller, struct prog_config this_config) 
 	
 	// build the main json object	
 	json_object_object_add(jsonOutHold, "node_id", json_object_new_string(this_config.node_id));
-	json_object_object_add(jsonOutHold, "switch_state", json_object_new_int(controller.switch_state));
+	json_object_object_add(jsonOutHold, "switch_state", json_object_new_string(controller.switch_state));
 	json_object_object_add(jsonOutHold, "module_count", json_object_new_int(controller.number_of_modules));
 	json_object_object_add(jsonOutHold, "modules", jsonModules);
 	
@@ -65,7 +65,7 @@ char *build_kbus_object(struct node controller, struct prog_config this_config) 
 	
 }
 
-char *build_event_object(struct prog_config this_config, int modulePosition, int channelPosition, int channelValue, int switchState) {
+char *build_analog_event_object(struct prog_config this_config, int modulePosition, int channelPosition, int channelValue) {
 	time_t time(time_t *t);
 	
 	json_object *jsonModule = json_object_new_object();
@@ -78,7 +78,28 @@ char *build_event_object(struct prog_config this_config, int modulePosition, int
 	
 	json_object_object_add(jsonModule, "node_id", json_object_new_string(this_config.node_id));
 	json_object_object_add(jsonModule, "timestamp", json_object_new_int64(time));
-	json_object_object_add(jsonModule, "switch_state", json_object_new_int(switchState));
+	//json_object_object_add(jsonModule, "switch_state", json_object_new_string(switchState));
+	json_object_object_add(jsonModule, "payload", jsonChannel);	
+	
+	return_string = json_object_to_json_string(jsonModule);	
+	
+	return return_string;
+}
+
+char *build_digital_event_object(struct prog_config this_config, int modulePosition, int channelPosition, bool channelValue) {
+	time_t time(time_t *t);
+	
+	json_object *jsonModule = json_object_new_object();
+	json_object *jsonChannel = json_object_new_object();
+	char *return_string;
+	
+	json_object_object_add(jsonChannel, "module", json_object_new_int(modulePosition));
+	json_object_object_add(jsonChannel, "channel", json_object_new_int(channelPosition));
+	json_object_object_add(jsonChannel, "value", json_object_new_boolean(channelValue));
+	
+	json_object_object_add(jsonModule, "node_id", json_object_new_string(this_config.node_id));
+	json_object_object_add(jsonModule, "timestamp", json_object_new_int64(time));
+	//json_object_object_add(jsonModule, "switch_state", json_object_new_string(switchState));
 	json_object_object_add(jsonModule, "payload", jsonChannel);	
 	
 	return_string = json_object_to_json_string(jsonModule);	
@@ -93,3 +114,37 @@ char *build_error_object(struct prog_config this_config, char *error_msg) {
 	char *return_string = json_object_to_json_string(json_error_object);
 	return return_string;
 }
+
+void xxparse_command_message(char *message, int *module_position, int *channel_position, int *channel_value)	{
+	struct json_object *parsed_json, *module_num, *channel_num, *channel_val;
+	parsed_json = json_tokener_parse(message);
+	enum json_type value_type;
+	if (json_object_object_get_ex(parsed_json, "module", &module_num) == true) {
+		module_position = json_object_get_int(module_num);
+	}
+	if (json_object_object_get_ex(parsed_json, "channel", &channel_num) == true) {
+		channel_position = json_object_get_int(channel_num);
+	}
+	if (json_object_object_get_ex(parsed_json, "value", &channel_val) == true) {
+		channel_value = json_object_get_int(channel_val);
+	}
+	printf("Module: %d Channel: %d Value: %d \n", module_position, channel_position, channel_value);
+}
+
+struct channel_command parse_command_message(char *message)	{
+	struct channel_command rcv_command;
+	struct json_object *parsed_json, *module_num, *channel_num, *channel_val;
+	parsed_json = json_tokener_parse(message);
+	enum json_type value_type;
+	if (json_object_object_get_ex(parsed_json, "module", &module_num) == true) {
+		rcv_command.module = json_object_get_int(module_num);
+	}
+	if (json_object_object_get_ex(parsed_json, "channel", &channel_num) == true) {
+		rcv_command.channel = json_object_get_int(channel_num);
+	}
+	if (json_object_object_get_ex(parsed_json, "value", &channel_val) == true) {
+		rcv_command.value = json_object_get_int(channel_val);
+	}
+	printf("Module: %d Channel: %d Value: %d \n", rcv_command.module, rcv_command.channel, rcv_command.value);
+	return rcv_command;
+};

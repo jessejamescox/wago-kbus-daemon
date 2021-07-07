@@ -25,7 +25,6 @@ struct node
 };
 
 extern int build_module_object(int terminalCount, tldkc_KbusInfo_TerminalInfo terminalDescription[LDKC_KBUS_TERMINAL_COUNT_MAX], u16 terminals[LDKC_KBUS_TERMINAL_COUNT_MAX], struct module modules[LDKC_KBUS_TERMINAL_COUNT_MAX]);
-
-extern void map_switch_state(int switch_state, char *state);
+extern char *map_switch_state(int switch_state);
 
 #endif /*__NODE_H__*/

@@ -27,6 +27,7 @@
 
 #include <stdio.h>
 #include <mosquitto.h>
+#include "kbus-daemon.h"
 #include "get_config.h"
 #include "node.h"
 #include "kbus.h"
@@ -39,13 +40,14 @@
 #define IS_ERROR	0x80
 
 // main functional kbus object
-struct kbus kbus;
+//struct kbus kbus;
 
 // main controller node object
 struct node controller;
+struct node controllerLast;
 
 // main kbus adi object
-tApplicationDeviceInterface *adi;
+//tApplicationDeviceInterface *adi;
 
 // main mosquitto object
 struct mosquitto *mosq = NULL;
@@ -55,7 +57,7 @@ int switch_state = 0;
 int mqtt_state = 0;
 
 int main(int argc, char *argv[]) {
-	
+		
 	// set the led state to stopped
 	set_led(IS_STOPPED);
 	
@@ -64,20 +66,26 @@ int main(int argc, char *argv[]) {
 	
 	// set the sub topic
 	char *sub_topic;
-	asprintf(&sub_topic, "%s/control/#", this_config.node_id);
+	asprintf(&sub_topic, "%s/kbus/event/outputs", this_config.node_id);
+	
+	// set the pub topic
+	//char *pub_topic;// = "hello/world";
+	asprintf(&pub_topic, "%s/kbus/event/inputs", this_config.node_id);
 	
 	// scan the kbus
-	int kbus_resp = kbus_init(&kbus, &adi);
+	int kbus_resp = kbus_init(&kbus);//, &adi);
 	
 	// map everything to the controller object as part of the init process
 	if(build_module_object(kbus.terminalCount, kbus.terminalDescription, kbus.terminals, &controller.modules)) {
 		controller.number_of_modules = kbus.terminalCount;
 	}
 	
+	
+	
 	// main while loop to check run-ready status
 	while(1) {
 		switch_state =	get_switch_state();
-		map_switch_state(switch_state, &controller.switch_state);
+		controller.switch_state = map_switch_state(switch_state);
 		
 		if (switch_state == 1)
 		{
@@ -96,6 +104,10 @@ int main(int argc, char *argv[]) {
 			}
 			else
 			{
+				controllerLast = controller;
+				char *kbusJsonObject = build_kbus_object(controller, this_config);
+				int pub_resp = mosquitto_publish(mosq, NULL, pub_topic, strlen(kbusJsonObject), kbusJsonObject, 0, 0);
+
 				int mosqSubResp = mosquitto_subscribe(mosq, NULL, sub_topic, 0);
 				if (mosqSubResp)
 				{
@@ -111,7 +123,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 		else {
-			set_led(IS_STOPPED);
+			//set_led(IS_STOPPED);
 		}
 		
 		// secondary loop to check switch state
@@ -124,13 +136,13 @@ int main(int argc, char *argv[]) {
 			int mosq_loop = mosquitto_loop(mosq, -1, 1);
 			if (mosq_loop) {					
 				log_error("Mosquitto loop connection error!\n");
-				set_led(IS_ERROR);
+				//set_led(IS_ERROR);
 				mosquitto_reconnect(mosq);
 			}
 			
-			int kbus_resp = kbus_scan(kbus, controller, &adi);
+			int kbus_resp = kbus_read(mosq, this_config, kbus, controller);//, &adi);
 			if (kbus_resp) {
-				printf("here");
+				//printf("Kbus response; %d /n", kbus_resp);
 			}
 		}
 	} // main while loop 	

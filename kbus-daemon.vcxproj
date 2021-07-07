@@ -85,11 +85,16 @@
   <ItemGroup>
     <ClInclude Include="get_config.h" />
     <ClInclude Include="json.h" />
+    <ClInclude Include="kbus-daemon.h" />
     <ClInclude Include="kbus.h" />
     <ClInclude Include="led.h" />
     <ClInclude Include="logger.h" />
     <ClInclude Include="mqtt.h" />
     <ClInclude Include="node.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="switch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="kbus-daemon.rc" />
   </ItemGroup>
 </Project>

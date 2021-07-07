@@ -7,9 +7,9 @@
 struct	prog_config {
 	char *node_id;
 	char *mqtt_endpoint;
-	int tls_encryption;
+	//int tls_encryption;
 	int mqtt_port;
-	int cycleSpeedMs;
+	//int cycleSpeedMs;
 };
 
 extern struct prog_config get_program_config();

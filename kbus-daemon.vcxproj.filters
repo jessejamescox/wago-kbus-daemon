@@ -89,5 +89,16 @@
     <ClInclude Include="switch.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="kbus-daemon.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="kbus-daemon.rc">
+      <Filter>Resource files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

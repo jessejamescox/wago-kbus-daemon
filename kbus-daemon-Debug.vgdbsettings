@@ -13,7 +13,7 @@
       <UserName>wago</UserName>
     </BuildHost>
     <DeploymentHost>
-      <HostName>10.6.10.153</HostName>
+      <HostName>192.168.1.153</HostName>
       <Transport>SSH</Transport>
       <UserName>root</UserName>
     </DeploymentHost>
@@ -121,7 +121,7 @@
       <ForceSingleThreadedMode>false</ForceSingleThreadedMode>
       <UseAppleExtensions>false</UseAppleExtensions>
       <CanAcceptCommandsWhileRunning>false</CanAcceptCommandsWhileRunning>
-      <MakeLogFile>false</MakeLogFile>
+      <MakeLogFile>true</MakeLogFile>
       <IgnoreModuleEventsWhileStepping>true</IgnoreModuleEventsWhileStepping>
       <UseRelativePathsOnly>false</UseRelativePathsOnly>
       <ExitAction>None</ExitAction>

@@ -16,10 +16,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
 #include <libconfig.h>
 #include "get_config.h"
 
-#define CONFIG_FILE "/etc/kbus_mqtt_client/config.cfg"
+#define CONFIG_FILE "/etc/kbus_mqtt_client/kbus-daemon.cfg"
+#define HOST_NAME_MAX 100
 
 //struct progConfig thisConfig;
 
@@ -33,7 +36,7 @@ struct prog_config get_program_config() {
 	cf = &cfg;
 	config_init(cf);
 	
-	if (!config_read_file(cf, "/etc/kbus_mqtt_client/config.cfg")) {
+	if (!config_read_file(cf, CONFIG_FILE)) {
 		fprintf(stderr,
 			"%s:%d - %s\n",
 			config_error_file(cf),

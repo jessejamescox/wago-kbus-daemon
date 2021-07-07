@@ -68,25 +68,19 @@ int build_module_object(int terminalCount, tldkc_KbusInfo_TerminalInfo terminalD
 	return 1;
 }
 
-void map_switch_state(int switch_state, char *state) {
+char *map_switch_state(int switch_state) {
 	switch (switch_state) {
 	case -1:
-		state = "ERROR";
-		break;
+		return "ERROR";
 	case 1:
-		state = "RUN";
-		break;
+		return "RUN";
 	case 2:
-		state = "STOP";
-		break;
+		return "STOP";
 	case 8:
-		state = "RESET";
-		break;
+		return "RESET";
 	case 128:
-		state = "RESET_ALL";
-		break;
+		return "RESET_ALL";
 	default:
-		state = "NA";
-		break;		
+		return "NA";
 	}
 }
