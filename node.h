@@ -19,7 +19,7 @@ struct	module {
 
 struct node
 {
-	char *switch_state;	
+	char *switch_state;
 	int	number_of_modules;	
 	struct module modules[LDKC_KBUS_TERMINAL_COUNT_MAX];
 };

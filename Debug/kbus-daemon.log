@@ -1,1 +1,44 @@
-﻿  Advanced build logging is enabled for this project. Use View->VisualGDB Build Results to see the detailed build log.
+﻿  SSH: Connecting...
+  SSH: Handshaking...
+  SSH: Checking key...
+  SSH: Authenticating...
+  note : C:\Users\JC\Desktop\wago-kbus-daemon => /tmp/VisualGDB/c/Users/JC/Desktop/wago-kbus-daemon: 1 files copied (5090 bytes), 23 files are up-to-date.
+  make  CONFIG=Debug
+  /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -DDEBUG=1  -c kbus-daemon.c -o Debug/kbus-daemon.o -MD -MF Debug/kbus-daemon.dep
+  C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.h(5): note : included from here
+  C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(30): note : included from here
+C:\Users\JC\Desktop\wago-kbus-daemon\kbus.h(30,1): warning : useless storage class specifier in empty declaration
+     30 | };
+        | ^
+  C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(0): note : In function 'main'
+C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(81,2): warning : implicit declaration of function ‘asprintf’; did you mean ‘vsprintf’?
+     81 |  asprintf(&sub_topic, "%s/kbus/event/outputs", this_config.node_id);
+        |  ^~~~~~~~
+        |  vsprintf
+C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(93,87): warning : passing argument 4 of ‘build_module_object’ from incompatible pointer type
+     93 |  if(build_module_object(kbus.terminalCount, kbus.terminalDescription, kbus.terminals, &controller.modules)) {
+        |                                                                                       ^~~~~~~~~~~~~~~~~~~
+        |                                                                                       |
+        |                                                                                       struct module (*)[255]
+  C:\Users\JC\Desktop\wago-kbus-daemon\kbus.h(11): note : included from here
+  C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.h(5): note : included from here
+  C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(30): note : included from here
+  C:\Users\JC\Desktop\wago-kbus-daemon\node.h(27,189): note : expected ‘struct module *’ but argument is of type ‘struct module (*)[255]’
+     27 | extern int build_module_object(int terminalCount, tldkc_KbusInfo_TerminalInfo terminalDescription[LDKC_KBUS_TERMINAL_COUNT_MAX], u16 terminals[LDKC_KBUS_TERMINAL_COUNT_MAX], struct module modules[LDKC_KBUS_TERMINAL_COUNT_MAX]);
+        |                                                                                                                                                                               ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(124,69): warning : implicit declaration of function ‘strlen’
+    124 |      int pub_resp = mosquitto_publish(mosq, NULL, status_pub_topic, strlen(kbusJsonObject), kbusJsonObject, 0, 0);
+        |                                                                     ^~~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(124,69): warning : incompatible implicit declaration of built-in function ‘strlen’
+  C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(37,1): note : include ‘<string.h>’ or provide a declaration of ‘strlen’
+     36 | #include "led.h"
+    +++ |+#include <string.h>
+     37 | 
+C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(157,23): warning : initialization discards ‘const’ qualifier from pointer target type
+    157 |      char *mosq_err = mosquitto_strerror(mosq_loop);
+        |                       ^~~~~~~~~~~~~~~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon\kbus-daemon.c(168,5): warning : implicit declaration of function ‘usleep’; did you mean ‘sleep’?
+    168 |     usleep(3000);
+        |     ^~~~~~
+        |     sleep
+  /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-g++ -o Debug/kbus-daemon -Wl,-gc-sections   -L/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/lib -L/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/lib -Wl,--start-group Debug/get_config.o Debug/json.o Debug/kbus-daemon.o Debug/kbus.o Debug/led.o Debug/logger.o Debug/mqtt.o Debug/node.o Debug/switch.o -ldal -lglib-2.0 -lffi -lpthread -lrt -llibloader -loslinux -ldl -lncurses -lpcre -lconfig -lgmodule-2.0 -lz -lgio-2.0 -ldbus-glib-1 -lwago_dbus -ldbus-1 -lgobject-2.0 -ldbuskbuscommon -lcrypto -lssl -lmosquitto -loms -ljson-c  -Wl,--rpath='$ORIGIN'   -Wl,--end-group

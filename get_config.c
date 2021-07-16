@@ -21,7 +21,7 @@
 #include <libconfig.h>
 #include "get_config.h"
 
-#define CONFIG_FILE "/etc/kbus_mqtt_client/kbus-daemon.cfg"
+#define CONFIG_FILE "/etc/kbus-daemon/kbus-daemon.cfg"
 #define HOST_NAME_MAX 100
 
 //struct progConfig thisConfig;
@@ -49,6 +49,10 @@ struct prog_config get_program_config() {
 	// get the identification
 	if(!config_lookup_string(cf, "node_id", &config_hold.node_id))
 		printf("could not find the node id config param");
+	
+	// see if we need to run local broker
+	if (!config_lookup_bool(cf, "start_local_broker", &config_hold.start_local_broker))
+		printf("could not find the local broker config param");
 	
 	// get the mqtt endpoint
 	if(!config_lookup_string(cf, "mqtt_endpoint", &config_hold.mqtt_endpoint))

@@ -27,8 +27,7 @@ typedef struct kbus {
 	u16 terminals[LDKC_KBUS_TERMINAL_COUNT_MAX];  									// array of module identifiers
 	tldkc_KbusInfo_TerminalInfo terminalDescription[LDKC_KBUS_TERMINAL_COUNT_MAX];  // array of module oobjects
 	u_int32_t taskId;
-}
-;
+};
 
 extern tApplicationDeviceInterface *adi;
 extern struct kbus kbus;

@@ -19,16 +19,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "kbus-daemon.h"
 #include "node.h"
 #include "logger.h"
 #include "get_config.h"
 #include "json.h"
 #include "kbus.h"
 
-
+char *sub_topic;
 
 void mqtt_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message) {
-	if(strcmp(message->topic, "PFC200V3-496122/kbus/event/outputs") != 0) {
+	if(strcmp(message->topic, sub_topic) != 0) {
 		log_error("received message out of topic range");
 	}
 	else	{

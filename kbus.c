@@ -29,7 +29,7 @@ struct node controllerLast;
 tApplicationDeviceInterface *adi;
 struct kbus kbus;
 struct node controller;
-char *pub_topic;
+char *event_pub_topic;
 
 int kbus_init(struct kbus *kbus){//, tApplicationDeviceInterface *adi) {
 	
@@ -162,8 +162,10 @@ int kbus_read(struct mosquitto *mosq, struct prog_config this_config, struct kbu
 				adi->ReadBool(kbus.kbusDeviceId, kbus.taskId, (kbus.terminalDescription[i_modules].OffsetInput_bits + i_channels), (bool *) &controller.modules[i_modules].channelData[i_channels]);
 				adi->ReadEnd(kbus.kbusDeviceId, kbus.taskId);       // unlock PD-In data 
 				if(controller.modules[i_modules].channelData[i_channels] != controllerLast.modules[i_modules].channelData[i_channels]) {
+
+					
 					char *kbusEventString = build_digital_event_object(this_config, i_modules, i_channels, controller.modules[i_modules].channelData[i_channels]);
-					int pub_resp = mosquitto_publish(mosq, NULL, pub_topic, strlen(kbusEventString), kbusEventString, 0, 0);
+					int pub_resp = mosquitto_publish(mosq, NULL, event_pub_topic, strlen(kbusEventString), kbusEventString, 0, 0);
 					controllerLast.modules[i_modules].channelData[i_channels] = controller.modules[i_modules].channelData[i_channels];
 				}
 			}
@@ -176,7 +178,7 @@ int kbus_read(struct mosquitto *mosq, struct prog_config this_config, struct kbu
 				adi->ReadEnd(kbus.kbusDeviceId, kbus.taskId);       // unlock PD-In data 
 				if(controller.modules[i_modules].channelData[i_channels] != controllerLast.modules[i_modules].channelData[i_channels]) {
 					char *kbusEventString = build_analog_event_object(this_config, i_modules, i_channels, controller.modules[i_modules].channelData[i_channels]);
-					int pub_resp = mosquitto_publish(mosq, NULL, pub_topic, strlen(kbusEventString), kbusEventString, 0, 0);
+					int pub_resp = mosquitto_publish(mosq, NULL, event_pub_topic, strlen(kbusEventString), kbusEventString, 0, 0);
 					controllerLast.modules[i_modules].channelData[i_channels] = controller.modules[i_modules].channelData[i_channels];
 				}
 			}
