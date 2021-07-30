@@ -13,10 +13,10 @@ OBJCOPY := objcopy
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG=1
-INCLUDE_DIRS := 
-LIBRARY_DIRS := 
-LIBRARY_NAMES := 
-ADDITIONAL_LINKER_INPUTS := 
+INCLUDE_DIRS := /home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include /home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux /home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include /home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal
+LIBRARY_DIRS := /home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/lib /home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/lib
+LIBRARY_NAMES := dal glib-2.0 ffi pthread rt libloader oslinux dl ncurses pcre config gmodule-2.0 z gio-2.0 dbus-glib-1 wago_dbus dbus-1 gobject-2.0 dbuskbuscommon crypto ssl mosquitto oms json-c diagnostic
+ADDITIONAL_LINKER_INPUTS := $(shell $(PKG_CONFIG) --libs wago_diagnostic)
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 
 
@@ -24,7 +24,7 @@ CFLAGS := -std=c99 -ggdb -ffunction-sections -O0
 CXXFLAGS := -ggdb -ffunction-sections -O0
 ASFLAGS := 
 LDFLAGS := -Wl,-gc-sections
-COMMONFLAGS := 
+COMMONFLAGS := $(shell $(PKG_CONFIG) --cflags wago_diagnostic)
 LINKER_SCRIPT := 
 
 START_GROUP := -Wl,--start-group

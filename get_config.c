@@ -47,20 +47,85 @@ struct prog_config get_program_config() {
 	}
 	
 	// get the identification
-	if(!config_lookup_string(cf, "node_id", &config_hold.node_id))
+	if(!config_lookup_string(cf, "node_id", &config_hold.node_id)) {
 		printf("could not find the node id config param");
+	}
 	
 	// see if we need to run local broker
-	if (!config_lookup_bool(cf, "start_local_broker", &config_hold.start_local_broker))
+	if(!config_lookup_bool(cf, "start_local_broker", &config_hold.start_local_broker)) {
 		printf("could not find the local broker config param");
+	}
 	
 	// get the mqtt endpoint
-	if(!config_lookup_string(cf, "mqtt_endpoint", &config_hold.mqtt_endpoint))
+	if(!config_lookup_string(cf, "mqtt_endpoint", &config_hold.mqtt_endpoint)) {
 		printf("could not find the endpoint config param");
+	}
 	
 	// get the mqtt port
-	if(!config_lookup_int(cf, "mqtt_port", &config_hold.mqtt_port))
+	if(!config_lookup_int(cf, "mqtt_port", &config_hold.mqtt_port)) {
 		printf("could not find the mqtt port config param");
+	}
+	
+	// get the tls string
+	if(!config_lookup_bool(cf, "support_tls", &config_hold.support_tls)) {
+		printf("could not find the tls enable param");
+	}
+	
+	if (config_hold.support_tls)
+	{
+		// get the credentials
+		if(!config_lookup_string(cf, "cert_path", &config_hold.cert_path))
+		{
+			printf("could not find the tls certificate path");
+		}
+		
+		if (!config_lookup_string(cf, "key_path", &config_hold.key_path))
+		{
+			printf("could not find the tls key path");
+		}
+		
+		if (!config_lookup_string(cf, "rootca_path", &config_hold.rootca_path))
+		{
+			printf("could not find the tls root ca path");
+		}
+		
+		if (!config_lookup_bool(cf, "support_aws_shadow", &config_hold.support_aws_shadow))
+		{
+			printf("could not find the aws shadow setting");	
+		}
+	}
+	
+	if (config_hold.support_aws_shadow)	{
+		// get the sub topic
+		//asprintf(&config_hold.event_sub_topic, "$aws/things/%s/shadow/update", config_hold.node_id);
+		// get the sub topic
+		if(!config_lookup_string(cf, "event_sub_topic", &config_hold.event_sub_topic)) {
+			printf("could not find the tls enable param");
+		} asprintf(&config_hold.event_sub_topic, "%s%s", config_hold.node_id, config_hold.event_sub_topic);
+	
+		// get the pub topic
+		asprintf(&config_hold.event_pub_topic, "$aws/things/%s/shadow/update", config_hold.node_id);
+	
+		// get the status topic
+		asprintf(&config_hold.status_pub_topic, "$aws/things/%s/shadow/update", config_hold.node_id);
+	}
+	
+	else	{
+		// get the sub topic
+		if(!config_lookup_string(cf, "event_sub_topic", &config_hold.event_sub_topic)) {
+			printf("could not find the tls enable param");
+		} asprintf(&config_hold.event_sub_topic, "%s%s", config_hold.node_id, config_hold.event_sub_topic);
+	
+		// get the pub topic
+		if(!config_lookup_string(cf, "event_pub_topic", &config_hold.event_pub_topic)) {
+			printf("could not find the tls enable param");
+		} asprintf(&config_hold.event_pub_topic, "%s%s", config_hold.node_id, config_hold.event_pub_topic);
+	
+		// get the status topic
+		if(!config_lookup_string(cf, "status_pub_topic", &config_hold.status_pub_topic)) {
+			printf("could not find the tls enable param");
+		} asprintf(&config_hold.status_pub_topic, "%s%s", config_hold.node_id, config_hold.status_pub_topic);
+	}
 	
 	return (config_hold);
 	

@@ -44,7 +44,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0008\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0009\include\OsLinux;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0009\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0009\include\dal;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0004\include\c++\9.2.1;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0004\include\c++\9.2.1\arm-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0004\include\c++\9.2.1\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0006\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0007\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0005\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0008\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0009\include\OsLinux;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0009\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0009\include\dal;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0004\include\c++\9.2.1;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0004\include\c++\9.2.1\arm-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0004\include\c++\9.2.1\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0006\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0007\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0004\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0005\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0009\include\dbus-1.0;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\192.168.27.3\0009\include\diagnostic;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -75,7 +75,9 @@
     <ClCompile Include="logger.c" />
     <ClCompile Include="mqtt.c" />
     <ClCompile Include="node.c" />
+    <ClCompile Include="oms_led.c" />
     <ClCompile Include="switch.c" />
+    <ClCompile Include="utils.c" />
     <None Include="Makefile" />
     <None Include="debug.mak" />
     <None Include="release.mak" />
@@ -91,8 +93,10 @@
     <ClInclude Include="logger.h" />
     <ClInclude Include="mqtt.h" />
     <ClInclude Include="node.h" />
+    <ClInclude Include="oms_led.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="switch.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="kbus-daemon.rc" />

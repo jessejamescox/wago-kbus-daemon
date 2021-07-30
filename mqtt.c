@@ -26,17 +26,21 @@
 #include "json.h"
 #include "kbus.h"
 
-char *sub_topic;
+//char *sub_topic;
+
+struct prog_config this_config;
 
 void mqtt_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message) {
-	if(strcmp(message->topic, sub_topic) != 0) {
+	if (strcmp(message->topic, this_config.event_sub_topic) != 0) {
 		log_error("received message out of topic range");
 	}
 	else	{
 		// copy in the bu
 		char *buffer = message->payload;
-		int command_module_position, command_channel_position, command_channel_value;
-		struct channel_command rcv_command = parse_command_message(buffer);
-		kbus_write(rcv_command.module, rcv_command.channel, rcv_command.value);
+		if (parse_mqtt(buffer)) {
+			log_error("failed on kbus write from message");
+		}
+		//struct channel_command rcv_command = parse_command_message(buffer);
+		//kbus_write(rcv_command.module, rcv_command.channel, rcv_command.value);
 	}
 }

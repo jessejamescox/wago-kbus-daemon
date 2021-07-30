@@ -31,6 +31,8 @@ struct kbus kbus;
 struct node controller;
 char *event_pub_topic;
 
+bool initState = true;
+
 int kbus_init(struct kbus *kbus){//, tApplicationDeviceInterface *adi) {
 	
 	int i;
@@ -127,7 +129,7 @@ int kbus_init(struct kbus *kbus){//, tApplicationDeviceInterface *adi) {
 }
 
 int kbus_read(struct mosquitto *mosq, struct prog_config this_config, struct kbus kbus, struct node controller){//, tApplicationDeviceInterface *adi) {
-	
+
 	uint32_t retval = 0;
       
 	// use function "libpackbus_Push" to trigger one KBUS cycle.
@@ -147,7 +149,7 @@ int kbus_read(struct mosquitto *mosq, struct prog_config this_config, struct kbu
 		return - 5;         // exit programm
 	}
 
-	// Trigger Watchdog
+	// Trigger Watchdog although this is currently unused
 	adi->WatchdogTrigger();
 	
 	int i_modules, i_channels;
@@ -161,13 +163,6 @@ int kbus_read(struct mosquitto *mosq, struct prog_config this_config, struct kbu
 				adi->ReadStart(kbus.kbusDeviceId, kbus.taskId);       // lock PD-In data 
 				adi->ReadBool(kbus.kbusDeviceId, kbus.taskId, (kbus.terminalDescription[i_modules].OffsetInput_bits + i_channels), (bool *) &controller.modules[i_modules].channelData[i_channels]);
 				adi->ReadEnd(kbus.kbusDeviceId, kbus.taskId);       // unlock PD-In data 
-				if(controller.modules[i_modules].channelData[i_channels] != controllerLast.modules[i_modules].channelData[i_channels]) {
-
-					
-					char *kbusEventString = build_digital_event_object(this_config, i_modules, i_channels, controller.modules[i_modules].channelData[i_channels]);
-					int pub_resp = mosquitto_publish(mosq, NULL, event_pub_topic, strlen(kbusEventString), kbusEventString, 0, 0);
-					controllerLast.modules[i_modules].channelData[i_channels] = controller.modules[i_modules].channelData[i_channels];
-				}
 			}
 			int compRespAI = strcmp(controller.modules[i_modules].type, "AI");
 			if (!compRespAI) {
@@ -175,20 +170,22 @@ int kbus_read(struct mosquitto *mosq, struct prog_config this_config, struct kbu
 				int byteOffset = ((controller.modules[i_modules].bitOffsetIn / 8) + (i_channels * 2));
 				adi->ReadStart(kbus.kbusDeviceId, kbus.taskId);         // lock PD-In data 
 				adi->ReadBytes(kbus.kbusDeviceId, kbus.taskId, byteOffset, 2, (uint16_t *) &controller.modules[i_modules].channelData[i_channels]);
-				adi->ReadEnd(kbus.kbusDeviceId, kbus.taskId);       // unlock PD-In data 
-				if(controller.modules[i_modules].channelData[i_channels] != controllerLast.modules[i_modules].channelData[i_channels]) {
-					char *kbusEventString = build_analog_event_object(this_config, i_modules, i_channels, controller.modules[i_modules].channelData[i_channels]);
-					int pub_resp = mosquitto_publish(mosq, NULL, event_pub_topic, strlen(kbusEventString), kbusEventString, 0, 0);
-					controllerLast.modules[i_modules].channelData[i_channels] = controller.modules[i_modules].channelData[i_channels];
+				adi->ReadEnd(kbus.kbusDeviceId, kbus.taskId);       // unlock PD-In data
+			}
+			if (controller.modules[i_modules].channelData[i_channels] != controllerLast.modules[i_modules].channelData[i_channels]) {
+				if (!initState) {
+					build_event_object(mosq, controller, i_modules, i_channels, controller.modules[i_modules].channelData[i_channels]);
 				}
+				controllerLast.modules[i_modules].channelData[i_channels] = controller.modules[i_modules].channelData[i_channels];
 			}
 		} // for channels
 	} // for modules
+	initState = false;
+	return 0;
 }
 
 int kbus_write_digital(int modulePosition, int channelPosition, bool channelValue)	{
 	adi->WriteStart(kbus.kbusDeviceId, kbus.taskId);
-	//adi->WriteBool(kbus.kbusDeviceId, kbus.taskId, (kbus.terminalDescription[modulePosition].OffsetInput_bits + channelPosition), (bool *) &channelValue);
 	adi->WriteBool(kbus.kbusDeviceId, kbus.taskId, (controller.modules[modulePosition].bitOffsetOut + channelPosition), channelValue);
 	adi->WriteEnd(kbus.kbusDeviceId, kbus.taskId);  
 }

@@ -39,52 +39,32 @@
 #define IS_STOPPED	0x02
 #define IS_ERROR	0x80
 
+#define CAFLE "/etc/ssl/certs/root.ca.pem"
+#define CERTFILE "/etc/ssl/certs/f8c21b07a4a54d66ad1d71b14dbf9a7db4848817d9837385d10b6eedd90df4f3-certificate.pem.crt"
+#define KEYFILE "/etc/ssl/certs/f8c21b07a4a54d66ad1d71b14dbf9a7db4848817d9837385d10b6eedd90df4f3-private.pem.key"
+
 // main controller node object
 struct node controller;
 struct node controllerLast;
 
 // main mosquitto object
-struct mosquitto *mosq = NULL;
-
-// topic for status mesages
-char *status_pub_topic;
-
-// main switch state
+struct mosquitto *mosq;// = NULL;
+struct prog_config this_config;
 int switch_state = 0;
 int mqtt_state = 0;
 
 int led_state = 0;
 
+int i_cycles = 0;
+
 int main(int argc, char *argv[]) {
-	
-	// set the LED once
-	if (led_state!= 0)	{
-		set_led(IS_STOPPED);
-		led_state = 0;
-	} 
 	
 	log_set_quiet(true);
 	log_set_level(0);
-		
-	// set the led state to stopped
-	set_led(IS_STOPPED);
-	
+
 	// get the config
-	struct prog_config this_config = get_program_config();
-	
-	if (this_config.start_local_broker == true)
-	{
-		int mosq_broker = system("/usr/sbin/mosquitto -c /etc/mosquitto.conf -d");
-	}
-	
-	// set the sub topic
-	asprintf(&sub_topic, "%s/kbus/event/outputs", this_config.node_id);
-	
-	// set the event pub topic
-	asprintf(&status_pub_topic, "%s/kbus/status", this_config.node_id);
-	
-	// set the event pub topic
-	asprintf(&event_pub_topic, "%s/kbus/event/inputs", this_config.node_id);
+	this_config = get_program_config();
+	usleep(1000);
 	
 	// scan the kbus
 	int kbus_resp = kbus_init(&kbus);//, &adi);
@@ -94,22 +74,30 @@ int main(int argc, char *argv[]) {
 		controller.number_of_modules = kbus.terminalCount;
 	}
 	
+	controller.nodeId = this_config.node_id;
 	
+	mosquitto_lib_init();
 	
-	// main while loop to check run-ready status
+	mosq = mosquitto_new(NULL, true, NULL);
+	if (!mosq)
+	{
+		log_error("Can't initialize Mosquitto library");
+		exit(-1);
+	}
+	
+	if (this_config.support_tls)
+	{
+		mosquitto_tls_set(mosq, CAFLE, NULL, CERTFILE, KEYFILE, NULL);
+	}
 	while(1) {
+		int runState = 0;
 		
 		switch_state =	get_switch_state();
 		controller.switch_state = map_switch_state(switch_state);
 		
 		if (switch_state == 1)
 		{
-			mosq = mosquitto_new(NULL, true, NULL);
-			if (!mosq)
-			{
-				log_error("Can't initialize Mosquitto library");
-				exit(-1);
-			}
+			
 			// Establish a connection to the MQTT server. Do not use a keep-alive ping
 				int mosqConnectResp = mosquitto_connect(mosq, this_config.mqtt_endpoint, this_config.mqtt_port, 0);
 				if (mosqConnectResp)
@@ -120,30 +108,33 @@ int main(int argc, char *argv[]) {
 				else
 				{
 					controllerLast = controller;
-					char *kbusJsonObject = build_kbus_object(controller, this_config);
-					int pub_resp = mosquitto_publish(mosq, NULL, status_pub_topic, strlen(kbusJsonObject), kbusJsonObject, 0, 0);
+					//int *kbusJsonObject = build_controller_object(mosq , controller);
 
-					int mosqSubResp = mosquitto_subscribe(mosq, NULL, sub_topic, 0);
+					int mosqSubResp = mosquitto_subscribe(mosq, NULL, this_config.event_sub_topic, 0);
 					if (mosqSubResp)
 					{
-						log_error("Problem subscribing to %s", sub_topic);
+						log_error("Problem subscribing to %s", this_config.event_sub_topic);
 					}
 					else
 					{
 						// Specify the function to call when a new message is received
 						mosquitto_message_callback_set(mosq, mqtt_callback);
 						mqtt_state = 1;
-						set_led(IS_RUNNING);
-						led_state = 2;
+						//set_led(IS_RUNNING);
 					}
 				}
 			}
 			else {
 				if (led_state != 0) {
-					set_led(IS_STOPPED);
-					led_state = 0;
+					controller.switch_state = map_switch_state(switch_state);
+					int *kbusJsonObject = build_controller_object(mosq , controller);
+					//set_led(IS_STOPPED);
+					led_state = 1;
 				} 
 			}
+		
+		int initCycles = 0;
+		sleep(2);
 		
 			// secondary loop to check switch state
 			while((switch_state == 1) && (mqtt_state == 1)) {
@@ -155,17 +146,28 @@ int main(int argc, char *argv[]) {
 				if (mosq_loop) {					
 					log_error("Mosquitto loop connection error!\n");
 					char *mosq_err = mosquitto_strerror(mosq_loop);
-					set_led(IS_ERROR);
-					led_state = 3;
-					mqtt_state = 0;
-					//mosquitto_reconnect(mosq);
+					usleep(100000);
+					runState = 0;
+					initCycles = 0;
+					mosquitto_reconnect(mosq);
 				}
-			
-				int kbus_resp = kbus_read(mosq, this_config, kbus, controller);
-				if (kbus_resp) {
-					//printf("Kbus response; %d /n", kbus_resp);
+				
+				if ((!runState) && (initCycles == 100))	{
+					int *kbusJsonObject = build_controller_object(mosq, controller);
+					runState = 1;
+					initCycles = 0;
+					sleep(1);
 				}
-				usleep(3000);
+				else
+				{
+					int kbus_resp = kbus_read(mosq, this_config, kbus, controller);
+					if (kbus_resp != 0) {
+						char *kbus_error_string = build_error_object(true, controller, this_config, "kbus error present");
+						mosquitto_publish(mosq, NULL, this_config.status_pub_topic, strlen(kbus_error_string), kbus_error_string, 0, 0);
+					}	
+				}
+				initCycles++;
+				usleep(50000);
 			}
 		sleep(1);
 	} // main while loop 	

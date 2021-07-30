@@ -72,10 +72,10 @@ char *map_switch_state(int switch_state) {
 	switch (switch_state) {
 	case -1:
 		return "ERROR";
+	case 0:
+		return "STOP";
 	case 1:
 		return "RUN";
-	case 2:
-		return "STOP";
 	case 8:
 		return "RESET";
 	case 128:

@@ -60,6 +60,12 @@
     <ClCompile Include="switch.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="oms_led.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -93,6 +99,12 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="kbus-daemon.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="oms_led.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

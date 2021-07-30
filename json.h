@@ -16,17 +16,17 @@ struct channel_command
 	int value;
 };
 
-extern struct json_object *jsonCompleteKbus;
-extern struct json_object *jsonSend;
+//extern struct json_object *jsonCompleteKbus;
+//extern struct json_object *jsonSend;
 
-extern char *build_kbus_object(struct node controller, struct prog_config thisConfig);
-
-extern char *build_analog_event_object(struct prog_config this_config, int modulePosition, int channelPosition, int channelValue);
-
-extern char *build_digital_event_object(struct prog_config this_config, int modulePosition, int channelPosition, bool channelValue);
-
-extern char *build_error_object(struct prog_config, char *error_msg);
+extern char *build_error_object(bool error, struct node controller, struct prog_config, char *error_msg);
 
 extern struct channel_command parse_command_message(char *message);//, int *module_position, int * channel_position, int *channel_value);
+
+extern voidbuild_controller_object(struct mosquitto *mosq, struct node controller);
+
+extern void build_event_object(struct mosquitto *mosq, struct node controller, int modulePosition, int channelPosition, int channelValue);
+
+extern int *parse_mqtt(char *message);
 
 #endif /*__JSON_H__*/

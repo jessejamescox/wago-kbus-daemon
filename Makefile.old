@@ -76,7 +76,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := kbus-daemon.c
+SOURCEFILES := get_config.c json.c kbus-daemon.c kbus.c led.c logger.c mqtt.c node.c switch.c
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
