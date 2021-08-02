@@ -2,10 +2,119 @@
   SSH: Handshaking...
   SSH: Checking key...
   SSH: Authenticating...
-  note : C:\Users\JC\Desktop\wago-kbus-daemon-sandbox => /tmp/VisualGDB/c/Users/JC/Desktop/wago-kbus-daemon-sandbox: 1 files copied (1476 bytes), 27 files are up-to-date.
+  note : C:\Users\JC\Desktop\wago-kbus-daemon-sandbox => /tmp/VisualGDB/c/Users/JC/Desktop/wago-kbus-daemon-sandbox: 24 files copied (127KB).
   make  CONFIG=Debug
   make: --libs: Command not found
   make: --cflags: Command not found
+  mkdir Debug
+  /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c get_config.c -o Debug/get_config.o -MD -MF Debug/get_config.dep
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(0): note : In function 'get_program_config'
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(50,42): warning : passing argument 3 of ‘config_lookup_string’ from incompatible pointer type
+     50 |  if(!config_lookup_string(cf, "node_id", &config_hold.node_id)) {
+        |                                          ^~~~~~~~~~~~~~~~~~~~
+        |                                          |
+        |                                          char **
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(277,60): note : expected ‘const char **’ but argument is of type ‘char **’
+    277 |                                               const char **value);
+        |                                               ~~~~~~~~~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(53,3): warning : implicit declaration of function ‘gethostname’
+     53 |   gethostname(hn, 32);
+        |   ^~~~~~~~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(54,3): warning : implicit declaration of function ‘asprintf’; did you mean ‘vsprintf’?
+     54 |   asprintf(&config_hold.node_id, "%s", hn);
+        |   ^~~~~~~~
+        |   vsprintf
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(58,51): warning : passing argument 3 of ‘config_lookup_bool’ from incompatible pointer type
+     58 |  if(!config_lookup_bool(cf, "start_local_broker", &config_hold.start_local_broker)) {
+        |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        |                                                   |
+        |                                                   _Bool *
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(274,68): note : expected ‘int *’ but argument is of type ‘_Bool *’
+    274 |                                             const char *path, int *value);
+        |                                                               ~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(63,48): warning : passing argument 3 of ‘config_lookup_string’ from incompatible pointer type
+     63 |  if(!config_lookup_string(cf, "mqtt_endpoint", &config_hold.mqtt_endpoint)) {
+        |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~
+        |                                                |
+        |                                                char **
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(277,60): note : expected ‘const char **’ but argument is of type ‘char **’
+    277 |                                               const char **value);
+        |                                               ~~~~~~~~~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(73,44): warning : passing argument 3 of ‘config_lookup_bool’ from incompatible pointer type
+     73 |  if(!config_lookup_bool(cf, "support_tls", &config_hold.support_tls)) {
+        |                                            ^~~~~~~~~~~~~~~~~~~~~~~~
+        |                                            |
+        |                                            _Bool *
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(274,68): note : expected ‘int *’ but argument is of type ‘_Bool *’
+    274 |                                             const char *path, int *value);
+        |                                                               ~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(80,45): warning : passing argument 3 of ‘config_lookup_string’ from incompatible pointer type
+     80 |   if(!config_lookup_string(cf, "cert_path", &config_hold.cert_path))
+        |                                             ^~~~~~~~~~~~~~~~~~~~~~
+        |                                             |
+        |                                             char **
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(277,60): note : expected ‘const char **’ but argument is of type ‘char **’
+    277 |                                               const char **value);
+        |                                               ~~~~~~~~~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(85,45): warning : passing argument 3 of ‘config_lookup_string’ from incompatible pointer type
+     85 |   if (!config_lookup_string(cf, "key_path", &config_hold.key_path))
+        |                                             ^~~~~~~~~~~~~~~~~~~~~
+        |                                             |
+        |                                             char **
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(277,60): note : expected ‘const char **’ but argument is of type ‘char **’
+    277 |                                               const char **value);
+        |                                               ~~~~~~~~~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(90,48): warning : passing argument 3 of ‘config_lookup_string’ from incompatible pointer type
+     90 |   if (!config_lookup_string(cf, "rootca_path", &config_hold.rootca_path))
+        |                                                ^~~~~~~~~~~~~~~~~~~~~~~~
+        |                                                |
+        |                                                char **
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(277,60): note : expected ‘const char **’ but argument is of type ‘char **’
+    277 |                                               const char **value);
+        |                                               ~~~~~~~~~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(95,53): warning : passing argument 3 of ‘config_lookup_bool’ from incompatible pointer type
+     95 |   if (!config_lookup_bool(cf, "support_aws_shadow", &config_hold.support_aws_shadow))
+        |                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        |                                                     |
+        |                                                     _Bool *
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(274,68): note : expected ‘int *’ but argument is of type ‘_Bool *’
+    274 |                                             const char *path, int *value);
+        |                                                               ~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(117,51): warning : passing argument 3 of ‘config_lookup_string’ from incompatible pointer type
+    117 |   if(!config_lookup_string(cf, "event_sub_topic", &config_hold.event_sub_topic)) {
+        |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        |                                                   |
+        |                                                   char **
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(277,60): note : expected ‘const char **’ but argument is of type ‘char **’
+    277 |                                               const char **value);
+        |                                               ~~~~~~~~~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(122,51): warning : passing argument 3 of ‘config_lookup_string’ from incompatible pointer type
+    122 |   if(!config_lookup_string(cf, "event_pub_topic", &config_hold.event_pub_topic)) {
+        |                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        |                                                   |
+        |                                                   char **
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(277,60): note : expected ‘const char **’ but argument is of type ‘char **’
+    277 |                                               const char **value);
+        |                                               ~~~~~~~~~~~~~^~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(127,52): warning : passing argument 3 of ‘config_lookup_string’ from incompatible pointer type
+    127 |   if(!config_lookup_string(cf, "status_pub_topic", &config_hold.status_pub_topic)) {
+        |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        |                                                    |
+        |                                                    char **
+  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\get_config.c(21): note : included from here
+  \home\wago\wago\ptxproj\platform-wago-pfcXXX\sysroot-target\usr\include\libconfig.h(277,60): note : expected ‘const char **’ but argument is of type ‘char **’
+    277 |                                               const char **value);
+        |                                               ~~~~~~~~~~~~~^~~~~
   /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c json.c -o Debug/json.o -MD -MF Debug/json.dep
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus.h(13): note : included from here
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.h(5): note : included from here
@@ -27,16 +136,16 @@ C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.c(61,3): warning : implicit de
      61 |   asprintf(&mod, "module%i", (iModules + 1));
         |   ^~~~~~~~
         |   vsprintf
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.c(116,28): warning : initialization discards ‘const’ qualifier from pointer target type
-    116 |  char *controller_string = json_object_to_json_string(jsonMain);
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.c(125,28): warning : initialization discards ‘const’ qualifier from pointer target type
+    125 |  char *controller_string = json_object_to_json_string(jsonMain);
         |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.c(0): note : In function 'build_event_object'
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.c(178,23): warning : initialization discards ‘const’ qualifier from pointer target type
-    178 |  char *event_string = json_object_to_json_string(jsonMain);
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.c(203,23): warning : initialization discards ‘const’ qualifier from pointer target type
+    203 |  char *event_string = json_object_to_json_string(jsonMain);
         |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.c(0): note : In function 'parse_mqtt'
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.c(275,9): warning : returning ‘int’ from a function with return type ‘int *’ makes pointer from integer without a cast
-    275 |  return 1;
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.c(300,9): warning : returning ‘int’ from a function with return type ‘int *’ makes pointer from integer without a cast
+    300 |  return 1;
         |         ^
   /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c kbus-daemon.c -o Debug/kbus-daemon.o -MD -MF Debug/kbus-daemon.dep
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus.h(13): note : included from here
@@ -51,12 +160,12 @@ C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus.h(30,1): warning : useless sto
      30 | };
         | ^
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(0): note : In function 'main'
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(67,2): warning : implicit declaration of function ‘usleep’; did you mean ‘sleep’?
-     67 |  usleep(1000);
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(65,2): warning : implicit declaration of function ‘usleep’; did you mean ‘sleep’?
+     65 |  usleep(1000);
         |  ^~~~~~
         |  sleep
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(73,87): warning : passing argument 4 of ‘build_module_object’ from incompatible pointer type
-     73 |  if(build_module_object(kbus.terminalCount, kbus.terminalDescription, kbus.terminals, &controller.modules)) {
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(71,87): warning : passing argument 4 of ‘build_module_object’ from incompatible pointer type
+     71 |  if(build_module_object(kbus.terminalCount, kbus.terminalDescription, kbus.terminals, &controller.modules)) {
         |                                                                                       ^~~~~~~~~~~~~~~~~~~
         |                                                                                       |
         |                                                                                       struct module (*)[255]
@@ -66,21 +175,24 @@ C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(73,87): warning : pas
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\node.h(28,189): note : expected ‘struct module *’ but argument is of type ‘struct module (*)[255]’
      28 | extern int build_module_object(int terminalCount, tldkc_KbusInfo_TerminalInfo terminalDescription[LDKC_KBUS_TERMINAL_COUNT_MAX], u16 terminals[LDKC_KBUS_TERMINAL_COUNT_MAX], struct module modules[LDKC_KBUS_TERMINAL_COUNT_MAX]);
         |                                                                                                                                                                               ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(130,28): warning : implicit declaration of function ‘build_controller_object’; did you mean ‘voidbuild_controller_object’?
-    130 |      int *kbusJsonObject = build_controller_object(mosq , controller);
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(95,3): warning : implicit declaration of function ‘setRunLEDColor’
+     95 |   setRunLEDColor(RUN_COLOR_ERROR);
+        |   ^~~~~~~~~~~~~~
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(131,28): warning : implicit declaration of function ‘build_controller_object’; did you mean ‘voidbuild_controller_object’?
+    131 |      int *kbusJsonObject = build_controller_object(mosq , controller);
         |                            ^~~~~~~~~~~~~~~~~~~~~~~
         |                            voidbuild_controller_object
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(130,28): warning : initialization of ‘int *’ from ‘int’ makes pointer from integer without a cast
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(148,23): warning : initialization discards ‘const’ qualifier from pointer target type
-    148 |      char *mosq_err = mosquitto_strerror(mosq_loop);
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(131,28): warning : initialization of ‘int *’ from ‘int’ makes pointer from integer without a cast
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(153,23): warning : initialization discards ‘const’ qualifier from pointer target type
+    153 |      char *mosq_err = mosquitto_strerror(mosq_loop);
         |                       ^~~~~~~~~~~~~~~~~~
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(156,28): warning : initialization of ‘int *’ from ‘int’ makes pointer from integer without a cast
-    156 |      int *kbusJsonObject = build_controller_object(mosq, controller);
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(162,28): warning : initialization of ‘int *’ from ‘int’ makes pointer from integer without a cast
+    162 |      int *kbusJsonObject = build_controller_object(mosq, controller);
         |                            ^~~~~~~~~~~~~~~~~~~~~~~
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(166,67): warning : implicit declaration of function ‘strlen’
-    166 |       mosquitto_publish(mosq, NULL, this_config.status_pub_topic, strlen(kbus_error_string), kbus_error_string, 0, 0);
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(172,67): warning : implicit declaration of function ‘strlen’
+    172 |       mosquitto_publish(mosq, NULL, this_config.status_pub_topic, strlen(kbus_error_string), kbus_error_string, 0, 0);
         |                                                                   ^~~~~~
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(166,67): warning : incompatible implicit declaration of built-in function ‘strlen’
+C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(172,67): warning : incompatible implicit declaration of built-in function ‘strlen’
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.c(37,1): note : include ‘<string.h>’ or provide a declaration of ‘strlen’
      36 | #include "led.h"
     +++ |+#include <string.h>
@@ -113,6 +225,7 @@ C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus.c(195,132): warning : passing 
         |                                                                                                                                    |
         |                                                                                                                                    uint16_t * {aka short unsigned int *}
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus.c(195,132): note : expected ‘uint8_t *’ {aka ‘unsigned char *’} but argument is of type ‘uint16_t *’ {aka ‘short unsigned int *’}
+  /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c led.c -o Debug/led.o -MD -MF Debug/led.dep
   /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c logger.c -o Debug/logger.o -MD -MF Debug/logger.dep
   /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c mqtt.c -o Debug/mqtt.o -MD -MF Debug/mqtt.dep
   C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus.h(13): note : included from here
@@ -127,43 +240,5 @@ C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus.h(30,1): warning : useless sto
      30 | };
         | ^
   /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c node.c -o Debug/node.o -MD -MF Debug/node.dep
-  /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c oms_led.c -o Debug/oms_led.o -MD -MF Debug/oms_led.dep
-  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus.h(13): note : included from here
-  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.h(5): note : included from here
-  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(26): note : included from here
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\json.h(26,8): warning : type defaults to ‘int’ in declaration of ‘voidbuild_controller_object’
-     26 | extern voidbuild_controller_object(struct mosquitto *mosq, struct node controller);
-        |        ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus-daemon.h(5): note : included from here
-  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(26): note : included from here
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\kbus.h(30,1): warning : useless storage class specifier in empty declaration
-     30 | };
-        | ^
-  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(0): note : In function 'oms_led_Application_STOP'
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(112,9): warning : implicit declaration of function ‘kbus_ApplicationStateStop’
-    112 |     if (kbus_ApplicationStateStop() < 0)
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(116,5): warning : implicit declaration of function ‘modbus_ApplicationStateStop’
-    116 |     modbus_ApplicationStateStop();
-        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(0): note : In function 'oms_led_Application_RUN'
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(125,9): warning : implicit declaration of function ‘kbus_ApplicationStateRun’
-    125 |     if (kbus_ApplicationStateRun() < 0)
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(129,5): warning : implicit declaration of function ‘modbus_ApplicationStateRun’
-    129 |     modbus_ApplicationStateRun();
-        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~
-  C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(0): note : In function 'oms_led_task'
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(203,19): warning : implicit declaration of function ‘main_shutdownModules’
-    203 |                   main_shutdownModules();
-        |                   ^~~~~~~~~~~~~~~~~~~~
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(204,19): warning : implicit declaration of function ‘main_startUpModules’
-    204 |                   main_startUpModules();
-        |                   ^~~~~~~~~~~~~~~~~~~
-C:\Users\JC\Desktop\wago-kbus-daemon-sandbox\oms_led.c(230,9): warning : implicit declaration of function ‘usleep’; did you mean ‘sleep’?
-    230 |         usleep(100*1000);
-        |         ^~~~~~
-        |         sleep
   /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c switch.c -o Debug/switch.o -MD -MF Debug/switch.dep
-  /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-gcc -std=c99 -ggdb -ffunction-sections -O0  -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/OsLinux -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dal -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/dbus-1.0 -I/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/include/diagnostic -DDEBUG=1  -c utils.c -o Debug/utils.o -MD -MF Debug/utils.dep
-  /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-g++ -o Debug/kbus-daemon -Wl,-gc-sections   -L/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/lib -L/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/lib -Wl,--start-group Debug/get_config.o Debug/json.o Debug/kbus-daemon.o Debug/kbus.o Debug/led.o Debug/logger.o Debug/mqtt.o Debug/node.o Debug/oms_led.o Debug/switch.o Debug/utils.o -ldal -lglib-2.0 -lffi -lpthread -lrt -llibloader -loslinux -ldl -lncurses -lpcre -lconfig -lgmodule-2.0 -lz -lgio-2.0 -ldbus-glib-1 -lwago_dbus -ldbus-1 -lgobject-2.0 -ldbuskbuscommon -lcrypto -lssl -lmosquitto -loms -ljson-c -ldiagnostic  -Wl,--rpath='$ORIGIN'   -Wl,--end-group
+  /home/wago/wago/ptxproj/selected_toolchain/arm-linux-gnueabihf-g++ -o Debug/kbus-daemon -Wl,-gc-sections   -L/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/usr/lib -L/home/wago/wago/ptxproj/platform-wago-pfcXXX/sysroot-target/lib -Wl,--start-group Debug/get_config.o Debug/json.o Debug/kbus-daemon.o Debug/kbus.o Debug/led.o Debug/logger.o Debug/mqtt.o Debug/node.o Debug/switch.o -ldal -lglib-2.0 -lffi -lpthread -lrt -llibloader -loslinux -ldl -lncurses -lpcre -lconfig -lgmodule-2.0 -lz -lgio-2.0 -ldbus-glib-1 -lwago_dbus -ldbus-1 -lgobject-2.0 -ldbuskbuscommon -lcrypto -lssl -lmosquitto -loms -ljson-c -ldiagnostic  -Wl,--rpath='$ORIGIN'   -Wl,--end-group

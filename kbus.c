@@ -196,7 +196,7 @@ int kbus_write_analog(int modulePosition, int channelPosition, uint16_t channelV
 	adi->WriteEnd(kbus.kbusDeviceId, kbus.taskId);  
 }
 
-int kbus_write(int modulePosition, int channelPosition, int channelValue) {
+int kbus_write(struct mosquitto *mosq, struct node controller, int modulePosition, int channelPosition, int channelValue) {
 	if (strcmp(controller.modules[modulePosition].type, "DO") != 0)
 	{
 		if (strcmp(controller.modules[modulePosition].type, "AO") != 0)
@@ -205,6 +205,7 @@ int kbus_write(int modulePosition, int channelPosition, int channelValue) {
 		}
 		else	{
 			kbus_write_analog(modulePosition, channelPosition, channelValue);
+			build_event_object(mosq, controller, modulePosition, channelPosition, channelValue);
 		}
 	}
 	else {
@@ -213,5 +214,6 @@ int kbus_write(int modulePosition, int channelPosition, int channelValue) {
 			writeVal = true;
 		}
 			kbus_write_digital(modulePosition, channelPosition, writeVal);
+			build_event_object(mosq, controller, modulePosition, channelPosition, channelValue);
 	}
 }

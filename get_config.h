@@ -18,6 +18,7 @@ struct	prog_config {
 	char *event_sub_topic;
 	char *event_pub_topic;
 	char *status_pub_topic;
+	int analog_deadband;
 };
 
 extern struct prog_config this_config;

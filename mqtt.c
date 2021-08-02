@@ -1,6 +1,6 @@
-//  This file is part of kbus_daemon.
+//  This file is part of kbus-daemon.
 //--------------------------------------------------------------------------
-//  kbus_mqtt_client is free software: you can redistribute it and/or modify
+//  kbus-daemon is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
@@ -37,10 +37,8 @@ void mqtt_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_mes
 	else	{
 		// copy in the bu
 		char *buffer = message->payload;
-		if (parse_mqtt(buffer)) {
+		if (parse_mqtt(mosq, buffer)) {
 			log_error("failed on kbus write from message");
 		}
-		//struct channel_command rcv_command = parse_command_message(buffer);
-		//kbus_write(rcv_command.module, rcv_command.channel, rcv_command.value);
 	}
 }

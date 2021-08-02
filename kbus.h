@@ -35,6 +35,6 @@ extern struct kbus kbus;
 extern int kbus_init(struct kbus *kbus);
 extern int kbus_read(struct mosquitto *mosq, struct prog_config this_config, struct kbus kbus, struct node controller);
 extern int kbus_read_inputs(struct kbus kbus, struct node controller);
-extern int kbus_write(int modulePosition, int channelPosition, int channelValue);
+extern int kbus_write(struct mosquitto *mosq, struct node controller, int modulePosition, int channelPosition, int channelValue);
 
 #endif /*__KBUS_H__*/

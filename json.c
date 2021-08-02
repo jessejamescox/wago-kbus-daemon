@@ -64,11 +64,20 @@ void build_controller_object(struct mosquitto *mosq, struct node controller) {
 			
 			struct json_object	*jsonChannel	= json_object_new_object();
 			
-			if (strcmp(controller.modules[iModules].type, "AI"))
+			if (!strcmp(controller.modules[iModules].type, "DI"))
 			{
 				json_object_object_add(jsonChannel, "value", json_object_new_boolean(false));
 			}
-			else {
+			if (!strcmp(controller.modules[iModules].type, "DO"))
+			{
+				json_object_object_add(jsonChannel, "value", json_object_new_boolean(false));
+			}
+			if (!strcmp(controller.modules[iModules].type, "AI"))
+			{
+				json_object_object_add(jsonChannel, "value", json_object_new_int(0));
+			}
+			if (!strcmp(controller.modules[iModules].type, "AO"))
+			{
 				json_object_object_add(jsonChannel, "value", json_object_new_int(0));
 			}
 			
@@ -144,11 +153,27 @@ void build_event_object(struct mosquitto *mosq, struct node controller, int modu
 	struct json_object	*jsonChannel	= json_object_new_object();	
 	
 	// build the channel object
-	if(strcmp(controller.modules[modulePosition].type, "AI"))
+//	if(strcmp(controller.modules[modulePosition].type, "AI"))
+//	{
+//		json_object_object_add(jsonChannel, "value", json_object_new_boolean(channelValue));
+//	}
+//	else {
+//		json_object_object_add(jsonChannel, "value", json_object_new_int(channelValue));
+//	}
+	if (!strcmp(controller.modules[modulePosition].type, "DI"))
 	{
 		json_object_object_add(jsonChannel, "value", json_object_new_boolean(channelValue));
 	}
-	else {
+	if (!strcmp(controller.modules[modulePosition].type, "DO"))
+	{
+		json_object_object_add(jsonChannel, "value", json_object_new_boolean(channelValue));
+	}
+	if (!strcmp(controller.modules[modulePosition].type, "AI"))
+	{
+		json_object_object_add(jsonChannel, "value", json_object_new_int(channelValue));
+	}
+	if (!strcmp(controller.modules[modulePosition].type, "AO"))
+	{
 		json_object_object_add(jsonChannel, "value", json_object_new_int(channelValue));
 	}
 	
@@ -191,7 +216,7 @@ void build_event_object(struct mosquitto *mosq, struct node controller, int modu
 
 }
 
-int *parse_mqtt(char *message) {
+int *parse_mqtt(struct mosquitto *mosq, char *message) {
 	
 	struct channel_command channelCmd;
 	
@@ -234,7 +259,7 @@ int *parse_mqtt(char *message) {
 											channelCmd.value = json_object_get_int(jsonValue);
 											
 											// write the kbus regs
-											kbus_write(channelCmd.module, channelCmd.channel, channelCmd.value);			
+											kbus_write(mosq, controller, channelCmd.module, channelCmd.channel, channelCmd.value);			
 											
 											// clean up
 											json_object_put(jsonValue);
@@ -261,12 +286,12 @@ int *parse_mqtt(char *message) {
 	}
 	
 	// clean up
-	json_object_put(jsonValue);
-	json_object_put(jsonChannel);
-	json_object_put(jsonChannels);
-	json_object_put(jsonModule);
-	json_object_put(jsonModules);
-	json_object_put(jsonController);
+//	json_object_put(jsonValue);
+//	json_object_put(jsonChannel);
+//	json_object_put(jsonChannels);
+//	json_object_put(jsonModule);
+//	json_object_put(jsonModules);
+//	json_object_put(jsonController);
 	json_object_put(jsonDesired);
 	json_object_put(jsonState);
 	json_object_put(parsed_json);

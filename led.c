@@ -15,25 +15,17 @@
 //--------------------------------------------------------------------------
 
 #include <stdio.h>
+#include <wago_oms_API.h>
+#include <diagnostic_API.h>
+#include <led_server.h>
 #include "led.h"
 
-void set_led(int led_state) {
-	switch (led_state) {
-	case 1:
-		system("echo 255 > /sys/class/leds/run-green/brightness");
-		system("echo 0 > /sys/class/leds/run-red/brightness");
-		break;
-	case 2:
-		system("echo 255 > /sys/class/leds/run-green/brightness");
-		system("echo 255 > /sys/class/leds/run-red/brightness");
-		break;
-	case 128:
-		system("echo 0 > /sys/class/leds/run-green/brightness");
-		system("echo 255 > /sys/class/leds/run-red/brightness");
-		break;
-	default:
-		system("echo 0 > /sys/class/leds/run-green/brightness");
-		system("echo 0 > /sys/class/leds/run-red/brightness");
-		break;
-	}
+#define RUN_COLOR_OFF     0x00040004
+#define RUN_COLOR_GREEN   0x00040000
+#define RUN_COLOR_BLINK   0x00040005
+#define RUN_COLOR_RESET   0x00040001
+
+void setRunLEDColor(int color)
+{
+	log_EVENT_LogId(color, true);
 }

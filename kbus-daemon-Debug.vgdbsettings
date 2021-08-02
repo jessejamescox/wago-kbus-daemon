@@ -8,12 +8,12 @@
     </CustomSourceDirectories>
     <AutoProgramSPIFFSPartition>true</AutoProgramSPIFFSPartition>
     <BuildHost>
-      <HostName>192.168.27.3</HostName>
+      <HostName>192.168.1.53</HostName>
       <Transport>SSH</Transport>
       <UserName>wago</UserName>
     </BuildHost>
     <DeploymentHost>
-      <HostName>192.168.1.153</HostName>
+      <HostName>192.168.1.226</HostName>
       <Transport>SSH</Transport>
       <UserName>root</UserName>
     </DeploymentHost>

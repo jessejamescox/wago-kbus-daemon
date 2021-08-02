@@ -35,13 +35,11 @@
 #include "mqtt.h"
 #include "led.h"
 
-#define IS_RUNNING	0x01
-#define IS_STOPPED	0x02
-#define IS_ERROR	0x80
-
-#define CAFLE "/etc/ssl/certs/root.ca.pem"
-#define CERTFILE "/etc/ssl/certs/f8c21b07a4a54d66ad1d71b14dbf9a7db4848817d9837385d10b6eedd90df4f3-certificate.pem.crt"
-#define KEYFILE "/etc/ssl/certs/f8c21b07a4a54d66ad1d71b14dbf9a7db4848817d9837385d10b6eedd90df4f3-private.pem.key"
+#define RUN_COLOR_OFF     0x00040004
+#define RUN_COLOR_GREEN   0x00040000
+#define RUN_COLOR_BLINK   0x00040005
+#define RUN_COLOR_RESET   0x00040001
+#define RUN_COLOR_ERROR   0x00040002
 
 // main controller node object
 struct node controller;
@@ -87,16 +85,21 @@ int main(int argc, char *argv[]) {
 	
 	if (this_config.support_tls)
 	{
-		mosquitto_tls_set(mosq, CAFLE, NULL, CERTFILE, KEYFILE, NULL);
+		mosquitto_tls_set(mosq, this_config.rootca_path, NULL, this_config.cert_path, this_config.key_path, NULL);
 	}
 	while(1) {
 		int runState = 0;
+		led_state = 1;
+		
+		// initiate the LED as Error, wait for state to change
+		setRunLEDColor(RUN_COLOR_ERROR);
 		
 		switch_state =	get_switch_state();
 		controller.switch_state = map_switch_state(switch_state);
 		
 		if (switch_state == 1)
 		{
+			setRunLEDColor(RUN_COLOR_BLINK);
 			
 			// Establish a connection to the MQTT server. Do not use a keep-alive ping
 				int mosqConnectResp = mosquitto_connect(mosq, this_config.mqtt_endpoint, this_config.mqtt_port, 0);
@@ -108,7 +111,6 @@ int main(int argc, char *argv[]) {
 				else
 				{
 					controllerLast = controller;
-					//int *kbusJsonObject = build_controller_object(mosq , controller);
 
 					int mosqSubResp = mosquitto_subscribe(mosq, NULL, this_config.event_sub_topic, 0);
 					if (mosqSubResp)
@@ -120,7 +122,6 @@ int main(int argc, char *argv[]) {
 						// Specify the function to call when a new message is received
 						mosquitto_message_callback_set(mosq, mqtt_callback);
 						mqtt_state = 1;
-						//set_led(IS_RUNNING);
 					}
 				}
 			}
@@ -128,7 +129,6 @@ int main(int argc, char *argv[]) {
 				if (led_state != 0) {
 					controller.switch_state = map_switch_state(switch_state);
 					int *kbusJsonObject = build_controller_object(mosq , controller);
-					//set_led(IS_STOPPED);
 					led_state = 1;
 				} 
 			}
@@ -138,13 +138,18 @@ int main(int argc, char *argv[]) {
 		
 			// secondary loop to check switch state
 			while((switch_state == 1) && (mqtt_state == 1)) {
+				
 				// loop to get the switch state
 				switch_state =	get_switch_state();
+				
+				// set the run/stop LED
+				setRunLEDColor(RUN_COLOR_GREEN);
 			
 				// loop the mosquitto
 				int mosq_loop = mosquitto_loop(mosq, -1, 1);
 				if (mosq_loop) {					
 					log_error("Mosquitto loop connection error!\n");
+					setRunLEDColor(RUN_COLOR_ERROR);
 					char *mosq_err = mosquitto_strerror(mosq_loop);
 					usleep(100000);
 					runState = 0;
@@ -152,6 +157,7 @@ int main(int argc, char *argv[]) {
 					mosquitto_reconnect(mosq);
 				}
 				
+				// if the connection 
 				if ((!runState) && (initCycles == 100))	{
 					int *kbusJsonObject = build_controller_object(mosq, controller);
 					runState = 1;
@@ -171,5 +177,4 @@ int main(int argc, char *argv[]) {
 			}
 		sleep(1);
 	} // main while loop 	
-	//printf("Got here");
 }

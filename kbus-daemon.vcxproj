@@ -75,9 +75,7 @@
     <ClCompile Include="logger.c" />
     <ClCompile Include="mqtt.c" />
     <ClCompile Include="node.c" />
-    <ClCompile Include="oms_led.c" />
     <ClCompile Include="switch.c" />
-    <ClCompile Include="utils.c" />
     <None Include="Makefile" />
     <None Include="debug.mak" />
     <None Include="release.mak" />
@@ -93,10 +91,8 @@
     <ClInclude Include="logger.h" />
     <ClInclude Include="mqtt.h" />
     <ClInclude Include="node.h" />
-    <ClInclude Include="oms_led.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="switch.h" />
-    <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="kbus-daemon.rc" />

@@ -49,6 +49,9 @@ struct prog_config get_program_config() {
 	// get the identification
 	if(!config_lookup_string(cf, "node_id", &config_hold.node_id)) {
 		printf("could not find the node id config param");
+		char hn[32];
+		gethostname(hn, 32);
+		asprintf(&config_hold.node_id, "%s", hn);
 	}
 	
 	// see if we need to run local broker
@@ -98,10 +101,9 @@ struct prog_config get_program_config() {
 	if (config_hold.support_aws_shadow)	{
 		// get the sub topic
 		//asprintf(&config_hold.event_sub_topic, "$aws/things/%s/shadow/update", config_hold.node_id);
+		
 		// get the sub topic
-		if(!config_lookup_string(cf, "event_sub_topic", &config_hold.event_sub_topic)) {
-			printf("could not find the tls enable param");
-		} asprintf(&config_hold.event_sub_topic, "%s%s", config_hold.node_id, config_hold.event_sub_topic);
+		asprintf(&config_hold.event_sub_topic, "$aws/things/%s/shadow/update", config_hold.node_id);
 	
 		// get the pub topic
 		asprintf(&config_hold.event_pub_topic, "$aws/things/%s/shadow/update", config_hold.node_id);
@@ -125,6 +127,11 @@ struct prog_config get_program_config() {
 		if(!config_lookup_string(cf, "status_pub_topic", &config_hold.status_pub_topic)) {
 			printf("could not find the tls enable param");
 		} asprintf(&config_hold.status_pub_topic, "%s%s", config_hold.node_id, config_hold.status_pub_topic);
+	}
+	
+	if (!config_lookup_int(cf, "analog_deadband", &config_hold.analog_deadband))
+	{
+		printf("could not find the aws shadow setting");	
 	}
 	
 	return (config_hold);
